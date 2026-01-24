@@ -29,10 +29,6 @@
 }
 
 /* Override system color scheme - our theme takes priority */
-html {
-    color-scheme: light dark;
-}
-
 html[data-theme="light"] {
     color-scheme: light !important;
 }

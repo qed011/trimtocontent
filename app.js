@@ -269,6 +269,13 @@ class AppState {
         this.theme = theme;
         localStorage.setItem('theme', theme);
         document.documentElement.setAttribute('data-theme', theme);
+        // Force color-scheme override to bypass system preferences
+        document.documentElement.style.colorScheme = theme;
+        // Update meta tag as well
+        const metaColorScheme = document.querySelector('meta[name="color-scheme"]');
+        if (metaColorScheme) {
+            metaColorScheme.setAttribute('content', theme);
+        }
     }
 
     setPro(value) {
