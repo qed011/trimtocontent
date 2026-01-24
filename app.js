@@ -17,6 +17,7 @@ const translations = {
         supported_formats: "Supports PNG, JPG, WebP",
         settings_title: "Settings",
         trim_mode: "Trim Mode:",
+        mode_auto: "Auto-detect (PRO)",
         mode_transparency: "Transparency (PNG)",
         mode_white: "Near-White Background",
         threshold_label: "Threshold:",
@@ -40,12 +41,13 @@ const translations = {
         privacy_policy: "Privacy Policy",
         upgrade_modal_title: "Upgrade to Pro - Lifetime Access",
         feature_unlimited: "Unlimited images per batch",
+        feature_auto: "Auto-detect background mode",
         feature_threshold: "Adjustable threshold slider",
         feature_zip: "Download all as ZIP",
         feature_no_ads: "No advertisements",
         feature_lifetime: "Lifetime access on this device",
         one_person_license: "Each license is intended for one person.",
-        buy_now: "Buy Now - $9.99",
+        buy_now: "Buy Now - $1.00",
         restore_modal_title: "Restore Pro License",
         restore_instructions: "Enter your license key to restore Pro features on this device.",
         validate_license: "Validate License",
@@ -59,7 +61,22 @@ const translations = {
         no_trim_needed: "No trim needed",
         error: "Error",
         license_valid: "✓ License activated on this device!",
-        license_invalid: "✗ Invalid license key format."
+        license_invalid: "✗ Invalid license key format.",
+        threshold_help_title: "What is Threshold?",
+        threshold_help_description: "The threshold determines how sensitive the trimming algorithm is when detecting borders. It controls the color difference needed for pixels to be considered part of your image content.",
+        threshold_help_example: "Example:",
+        threshold_help_example_text: "If your image has a white background with a logo containing text and shades:",
+        threshold_help_low: "Low values (0-10):",
+        threshold_help_low_effect: "Only removes pure white borders. May leave light gray edges.",
+        threshold_help_medium: "Medium values (10-20):",
+        threshold_help_medium_effect: "Removes white and light gray. Good for most images.",
+        threshold_help_high: "High values (20-40):",
+        threshold_help_high_effect: "More aggressive trimming. Removes even medium gray. May cut into your content.",
+        threshold_help_tips: "Tips:",
+        threshold_help_tip1: "Start with value 10-15 for most images",
+        threshold_help_tip2: "Increase slowly and preview before processing",
+        threshold_help_tip3: "For text with anti-aliasing (smooth edges), use 20-25",
+        threshold_help_tip4: "Watch the preview to avoid cutting into your content"
     },
     "pt-BR": {
         app_title: "Cortar ao Conteúdo",
@@ -71,6 +88,7 @@ const translations = {
         supported_formats: "Suporta PNG, JPG, WebP",
         settings_title: "Configurações",
         trim_mode: "Modo de Corte:",
+        mode_auto: "Auto-detectar (PRO)",
         mode_transparency: "Transparência (PNG)",
         mode_white: "Fundo Quase Branco",
         threshold_label: "Limite:",
@@ -94,12 +112,13 @@ const translations = {
         privacy_policy: "Política de Privacidade",
         upgrade_modal_title: "Upgrade para Pro - Acesso Vitalício",
         feature_unlimited: "Imagens ilimitadas por lote",
+        feature_auto: "Modo auto-detectar fundo",
         feature_threshold: "Controle ajustável de limite",
         feature_zip: "Baixar todas em ZIP",
         feature_no_ads: "Sem anúncios",
         feature_lifetime: "Acesso vitalício neste dispositivo",
         one_person_license: "Cada licença é destinada a uma pessoa.",
-        buy_now: "Comprar Agora - $9.99",
+        buy_now: "Comprar Agora - $1.00",
         restore_modal_title: "Restaurar Licença Pro",
         restore_instructions: "Digite sua chave de licença para restaurar recursos Pro neste dispositivo.",
         validate_license: "Validar Licença",
@@ -113,7 +132,22 @@ const translations = {
         no_trim_needed: "Sem necessidade de corte",
         error: "Erro",
         license_valid: "✓ Licença ativada neste dispositivo!",
-        license_invalid: "✗ Formato de chave de licença inválido."
+        license_invalid: "✗ Formato de chave de licença inválido.",
+        threshold_help_title: "O que é Limite?",
+        threshold_help_description: "O limite determina a sensibilidade do algoritmo de corte ao detectar bordas. Controla a diferença de cor necessária para que os pixels sejam considerados como parte do seu conteúdo.",
+        threshold_help_example: "Exemplo:",
+        threshold_help_example_text: "Se sua imagem tem um fundo branco com um logo contendo texto e tons:",
+        threshold_help_low: "Valores baixos (0-10):",
+        threshold_help_low_effect: "Remove apenas bordas brancas puras. Pode deixar bordas cinza claro.",
+        threshold_help_medium: "Valores médios (10-20):",
+        threshold_help_medium_effect: "Remove branco e cinza claro. Bom para a maioria das imagens.",
+        threshold_help_high: "Valores altos (20-40):",
+        threshold_help_high_effect: "Corte mais agressivo. Remove até cinza médio. Pode cortar seu conteúdo.",
+        threshold_help_tips: "Dicas:",
+        threshold_help_tip1: "Comece com valor 10-15 para a maioria das imagens",
+        threshold_help_tip2: "Aumente lentamente e visualize antes de processar",
+        threshold_help_tip3: "Para texto com suavização (bordas suaves), use 20-25",
+        threshold_help_tip4: "Observe a prévia para evitar cortar seu conteúdo"
     },
     es: {
         app_title: "Recortar al Contenido",
@@ -125,6 +159,7 @@ const translations = {
         supported_formats: "Soporta PNG, JPG, WebP",
         settings_title: "Configuración",
         trim_mode: "Modo de Recorte:",
+        mode_auto: "Auto-detectar (PRO)",
         mode_transparency: "Transparencia (PNG)",
         mode_white: "Fondo Casi Blanco",
         threshold_label: "Umbral:",
@@ -148,12 +183,13 @@ const translations = {
         privacy_policy: "Política de Privacidad",
         upgrade_modal_title: "Actualizar a Pro - Acceso de por Vida",
         feature_unlimited: "Imágenes ilimitadas por lote",
+        feature_auto: "Modo auto-detectar fondo",
         feature_threshold: "Control ajustable de umbral",
         feature_zip: "Descargar todas en ZIP",
         feature_no_ads: "Sin anuncios",
         feature_lifetime: "Acceso de por vida en este dispositivo",
         one_person_license: "Cada licencia está destinada a una persona.",
-        buy_now: "Comprar Ahora - $9.99",
+        buy_now: "Comprar Ahora - $1.00",
         restore_modal_title: "Restaurar Licencia Pro",
         restore_instructions: "Ingresa tu clave de licencia para restaurar las funciones Pro en este dispositivo.",
         validate_license: "Validar Licencia",
@@ -167,6 +203,22 @@ const translations = {
         no_trim_needed: "No necesita recorte",
         error: "Error",
         license_valid: "✓ ¡Licencia activada en este dispositivo!",
+        license_invalid: "✗ Formato de clave de licencia inválido.",
+        threshold_help_title: "¿Qué es Umbral?",
+        threshold_help_description: "El umbral determina la sensibilidad del algoritmo de recorte al detectar bordes. Controla la diferencia de color necesaria para que los píxeles se consideren parte del contenido de tu imagen.",
+        threshold_help_example: "Ejemplo:",
+        threshold_help_example_text: "Si tu imagen tiene un fondo blanco con un logo que contiene texto y tonos:",
+        threshold_help_low: "Valores bajos (0-10):",
+        threshold_help_low_effect: "Solo elimina bordes blancos puros. Puede dejar bordes gris claro.",
+        threshold_help_medium: "Valores medios (10-20):",
+        threshold_help_medium_effect: "Elimina blanco y gris claro. Bueno para la mayoría de imágenes.",
+        threshold_help_high: "Valores altos (20-40):",
+        threshold_help_high_effect: "Recorte más agresivo. Elimina incluso gris medio. Puede cortar tu contenido.",
+        threshold_help_tips: "Consejos:",
+        threshold_help_tip1: "Comienza con valor 10-15 para la mayoría de imágenes",
+        threshold_help_tip2: "Aumenta lentamente y previsualiza antes de procesar",
+        threshold_help_tip3: "Para texto con suavizado (bordes suaves), usa 20-25",
+        threshold_help_tip4: "Observa la vista previa para evitar cortar tu contenido",
         license_invalid: "✗ Formato de clave de licencia inválido."
     }
 };
@@ -358,8 +410,17 @@ class ImageTrimmer {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const pixels = imageData.data;
 
+        // Auto-detect mode: analyze image to determine best trimming method
+        let actualMode = mode;
+        let detectedColor = null;
+        if (mode === 'auto') {
+            const detection = this.detectBackgroundMode(pixels, canvas.width, canvas.height);
+            actualMode = detection.mode;
+            detectedColor = detection.backgroundColor;
+        }
+
         // Find bounding box of content
-        const bounds = this.findContentBounds(pixels, canvas.width, canvas.height, mode, threshold);
+        const bounds = this.findContentBounds(pixels, canvas.width, canvas.height, actualMode, threshold, detectedColor);
 
         if (!bounds) {
             // No content found or image is all content
@@ -405,9 +466,104 @@ class ImageTrimmer {
     }
 
     /**
+     * Auto-detect background mode by analyzing image edges
+     * Returns the best mode and detected background color
+     */
+    static detectBackgroundMode(pixels, width, height) {
+        // Sample pixels from edges (top, bottom, left, right)
+        const edgePixels = [];
+        const sampleSize = Math.min(50, Math.floor(width / 4)); // Sample up to 50 pixels per edge
+        
+        // Top edge
+        for (let x = 0; x < width; x += Math.max(1, Math.floor(width / sampleSize))) {
+            const idx = x * 4;
+            edgePixels.push({
+                r: pixels[idx],
+                g: pixels[idx + 1],
+                b: pixels[idx + 2],
+                a: pixels[idx + 3]
+            });
+        }
+        
+        // Bottom edge
+        const bottomY = height - 1;
+        for (let x = 0; x < width; x += Math.max(1, Math.floor(width / sampleSize))) {
+            const idx = (bottomY * width + x) * 4;
+            edgePixels.push({
+                r: pixels[idx],
+                g: pixels[idx + 1],
+                b: pixels[idx + 2],
+                a: pixels[idx + 3]
+            });
+        }
+        
+        // Left edge
+        for (let y = 0; y < height; y += Math.max(1, Math.floor(height / sampleSize))) {
+            const idx = (y * width) * 4;
+            edgePixels.push({
+                r: pixels[idx],
+                g: pixels[idx + 1],
+                b: pixels[idx + 2],
+                a: pixels[idx + 3]
+            });
+        }
+        
+        // Right edge
+        const rightX = width - 1;
+        for (let y = 0; y < height; y += Math.max(1, Math.floor(height / sampleSize))) {
+            const idx = (y * width + rightX) * 4;
+            edgePixels.push({
+                r: pixels[idx],
+                g: pixels[idx + 1],
+                b: pixels[idx + 2],
+                a: pixels[idx + 3]
+            });
+        }
+        
+        // Check for transparency (any alpha < 255)
+        const hasTransparency = edgePixels.some(p => p.a < 250);
+        if (hasTransparency) {
+            return { mode: 'transparency', backgroundColor: null };
+        }
+        
+        // Calculate average color of edges
+        let totalR = 0, totalG = 0, totalB = 0;
+        let count = 0;
+        
+        for (const pixel of edgePixels) {
+            if (pixel.a > 250) { // Only consider opaque pixels
+                totalR += pixel.r;
+                totalG += pixel.g;
+                totalB += pixel.b;
+                count++;
+            }
+        }
+        
+        if (count === 0) {
+            return { mode: 'transparency', backgroundColor: null };
+        }
+        
+        const avgColor = {
+            r: Math.round(totalR / count),
+            g: Math.round(totalG / count),
+            b: Math.round(totalB / count)
+        };
+        
+        // Check if average color is near white (all channels > 240)
+        const isNearWhite = avgColor.r > 240 && avgColor.g > 240 && avgColor.b > 240;
+        
+        if (isNearWhite) {
+            return { mode: 'white', backgroundColor: avgColor };
+        }
+        
+        // Use custom color mode with detected background color
+        return { mode: 'color', backgroundColor: avgColor };
+    }
+
+    /**
      * Find bounding box of content pixels
      */
-    static findContentBounds(pixels, width, height, mode, threshold) {
+    static findContentBounds(pixels, width, height, mode, threshold, backgroundColor = null) {
         let left = width;
         let right = 0;
         let top = height;
@@ -427,7 +583,7 @@ class ImageTrimmer {
                 if (mode === 'transparency') {
                     // Check alpha channel - anything not fully transparent is content
                     isContent = a > 10; // Small threshold for alpha
-                } else {
+                } else if (mode === 'white') {
                     // Near-white detection
                     // Check if pixel is NOT near white
                     const whiteDiff = Math.max(
@@ -436,6 +592,14 @@ class ImageTrimmer {
                         Math.abs(255 - b)
                     );
                     isContent = whiteDiff > threshold && a > 10;
+                } else if (mode === 'color' && backgroundColor) {
+                    // Custom color detection (used by auto-detect)
+                    const colorDiff = Math.max(
+                        Math.abs(backgroundColor.r - r),
+                        Math.abs(backgroundColor.g - g),
+                        Math.abs(backgroundColor.b - b)
+                    );
+                    isContent = colorDiff > threshold && a > 10;
                 }
 
                 if (isContent) {
@@ -540,6 +704,16 @@ class UIManager {
             this.thresholdValue.textContent = e.target.value;
         });
 
+        // Threshold help button
+        const thresholdHelpBtn = document.getElementById('thresholdHelpBtn');
+        if (thresholdHelpBtn) {
+            thresholdHelpBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.showModal('thresholdHelperModal');
+            });
+        }
+
         // Modal close buttons
         document.querySelectorAll('.modal-close').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -573,6 +747,16 @@ class UIManager {
         if (!isPro) {
             this.threshold.value = 10;
             this.thresholdValue.textContent = '10';
+        }
+        
+        // Enable/disable auto-detect mode (Pro only)
+        const autoOption = this.trimMode.querySelector('option[value="auto"]');
+        if (autoOption) {
+            autoOption.disabled = !isPro;
+            // Reset to transparency if free user tries to use auto-detect
+            if (!isPro && this.trimMode.value === 'auto') {
+                this.trimMode.value = 'transparency';
+            }
         }
         
         // Show/hide download all button
@@ -793,6 +977,12 @@ class UIManager {
         const mode = this.trimMode.value;
         const threshold = parseInt(this.threshold.value);
         const outputFormat = this.outputFormat.value;
+
+        // Check if user is trying to use Pro features without Pro
+        if (mode === 'auto' && !this.appState.isPro) {
+            this.showModal('upgradeModal');
+            return;
+        }
 
         // Mark all as processing
         this.appState.images.forEach(img => {

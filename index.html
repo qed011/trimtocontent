@@ -75,6 +75,7 @@
                 <div class="setting-item">
                     <label for="trimMode" data-i18n="trim_mode">Trim Mode:</label>
                     <select id="trimMode">
+                        <option value="auto" data-i18n="mode_auto">Auto-detect (PRO)</option>
                         <option value="transparency" data-i18n="mode_transparency">Transparency (PNG)</option>
                         <option value="white" data-i18n="mode_white">Near-White Background</option>
                     </select>
@@ -84,6 +85,7 @@
                         <span data-i18n="threshold_label">Threshold:</span>
                         <span id="thresholdValue">10</span>
                         <span class="pro-badge" data-i18n="pro_only">PRO</span>
+                        <button type="button" id="thresholdHelpBtn" class="help-btn" aria-label="Threshold help" title="What is threshold?">?</button>
                     </label>
                     <input type="range" id="threshold" min="0" max="40" value="10" disabled>
                 </div>
@@ -158,6 +160,7 @@
             <h2 data-i18n="upgrade_modal_title">Upgrade to Pro - Lifetime Access</h2>
             <div class="features-list">
                 <div class="feature">✓ <span data-i18n="feature_unlimited">Unlimited images per batch</span></div>
+                <div class="feature">✓ <span data-i18n="feature_auto">Auto-detect background mode</span></div>
                 <div class="feature">✓ <span data-i18n="feature_threshold">Adjustable threshold slider</span></div>
                 <div class="feature">✓ <span data-i18n="feature_zip">Download all as ZIP</span></div>
                 <div class="feature">✓ <span data-i18n="feature_no_ads">No advertisements</span></div>
@@ -187,6 +190,37 @@
             <h2 data-i18n="free_limit_title">Free Plan Limitation</h2>
             <p data-i18n="free_limit_message">Free users can only process 1 image at a time. Upgrade to Pro for unlimited batch processing!</p>
             <button class="btn-primary" data-i18n="upgrade_now" onclick="document.getElementById('freeLimitModal').classList.add('hidden'); document.getElementById('upgradeModal').classList.remove('hidden');">Upgrade Now</button>
+        </div>
+    </div>
+
+    <!-- Threshold Helper Modal -->
+    <div id="thresholdHelperModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">&times;</button>
+            <h2 data-i18n="threshold_help_title">What is Threshold?</h2>
+            <div class="threshold-help-content">
+                <p data-i18n="threshold_help_description">The threshold determines how sensitive the trimming algorithm is when detecting borders. It controls the color difference needed for pixels to be considered part of your image content.</p>
+                
+                <div class="threshold-example">
+                    <h3 data-i18n="threshold_help_example">Example:</h3>
+                    <p data-i18n="threshold_help_example_text">If your image has a white background with a logo containing text and shades:</p>
+                    <ul>
+                        <li><strong data-i18n="threshold_help_low">Low values (0-10):</strong> <span data-i18n="threshold_help_low_effect">Only removes pure white borders. May leave light gray edges.</span></li>
+                        <li><strong data-i18n="threshold_help_medium">Medium values (10-20):</strong> <span data-i18n="threshold_help_medium_effect">Removes white and light gray. Good for most images.</span></li>
+                        <li><strong data-i18n="threshold_help_high">High values (20-40):</strong> <span data-i18n="threshold_help_high_effect">More aggressive trimming. Removes even medium gray. May cut into your content.</span></li>
+                    </ul>
+                </div>
+
+                <div class="threshold-tips">
+                    <h3 data-i18n="threshold_help_tips">Tips:</h3>
+                    <ul>
+                        <li data-i18n="threshold_help_tip1">Start with value 10-15 for most images</li>
+                        <li data-i18n="threshold_help_tip2">Increase slowly and preview before processing</li>
+                        <li data-i18n="threshold_help_tip3">For text with anti-aliasing (smooth edges), use 20-25</li>
+                        <li data-i18n="threshold_help_tip4">Watch the preview to avoid cutting into your content</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
