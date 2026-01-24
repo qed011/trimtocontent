@@ -385,6 +385,30 @@ class LicenseValidator {
 }
 
 // ===================================
+// License Testing Helper (Dev Only)
+// ===================================
+// Para testar offline o sistema de licença, abra o console (F12) e digite:
+// generateTestLicense() - gera uma chave de teste válida
+// validateTestLicense() - valida a última chave gerada
+const generateTestLicense = () => {
+    const key = LicenseValidator.generateSampleKey();
+    window.testLicenseKey = key;
+    console.log('✓ Chave de teste gerada:', key);
+    console.log('Cole esta chave no modal de "Restore Pro License"');
+    return key;
+};
+
+const validateTestLicense = () => {
+    if (!window.testLicenseKey) {
+        console.log('❌ Nenhuma chave gerada. Execute generateTestLicense() primeiro');
+        return false;
+    }
+    const isValid = LicenseValidator.validate(window.testLicenseKey);
+    console.log(isValid ? '✓ Chave válida!' : '❌ Chave inválida');
+    return isValid;
+};
+
+// ===================================
 // Image Trimmer - Core Algorithm
 // ===================================
 class ImageTrimmer {
@@ -621,8 +645,26 @@ class ImageTrimmer {
      * Convert canvas to blob with specified format
      */
     static async canvasToBlob(canvas, format, quality = 0.95) {
-        return new Promise((resolve) => {
-            canvas.toBlob(resolve, format, quality);
+        return new Promise((resolve, reject) => {
+            try {
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                    } else {
+                        // Fallback to PNG if the format is not supported
+                        console.warn(`Format ${format} not supported, falling back to PNG`);
+                        canvas.toBlob((fallbackBlob) => {
+                            if (fallbackBlob) {
+                                resolve(fallbackBlob);
+                            } else {
+                                reject(new Error('Failed to create blob from canvas'));
+                            }
+                        }, 'image/png');
+                    }
+                }, format, quality);
+            } catch (error) {
+                reject(error);
+            }
         });
     }
 }
@@ -658,7 +700,6 @@ class UIManager {
         this.thresholdValue = document.getElementById('thresholdValue');
         this.outputFormat = document.getElementById('outputFormat');
         this.progressBar = document.getElementById('progressBar');
-        this.adContainer = document.getElementById('adContainer');
     }
 
     attachEventListeners() {
@@ -771,17 +812,36 @@ class UIManager {
     }
 
     loadAds() {
-        // Only show ads for free users
+        // ===================================
+        // Google AdSense Auto Ads Implementation
+        // ===================================
+        // We use Auto Ads only (no manual ad units, no placeholders).
+        // The AdSense loader script in <head> handles all ad placement automatically.
+        // For Pro users, we neutralize the script to prevent ads from loading.
+        
+        const adsenseLoader = document.getElementById('adsenseLoader');
+        
         if (!this.appState.isPro) {
-            this.adContainer.classList.remove('hidden');
-            // In production, load actual AdSense script here
-            // Example:
-            // const script = document.createElement('script');
-            // script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-            // script.async = true;
-            // document.getElementById('adsenseScript').appendChild(script);
+            // Free user: Allow Auto Ads to run
+            // The AdSense script in <head> will handle ad placement automatically
+            // Google decides where to place ads based on page content
+            if (adsenseLoader) {
+                adsenseLoader.setAttribute('data-ads', 'enabled');
+            }
         } else {
-            this.adContainer.classList.add('hidden');
+            // Pro user: Neutralize AdSense to prevent ads
+            // Remove the AdSense loader script to prevent Auto Ads
+            // This stops any new ad requests from being made
+            if (adsenseLoader) {
+                adsenseLoader.remove();
+                console.log('AdSense Auto Ads disabled for Pro user');
+            }
+            
+            // Clear any AdSense-related global state to prevent residual ads
+            // This is a safety measure for Auto Ads
+            if (window.adsbygoogle) {
+                window.adsbygoogle.loaded = true; // Prevent further ad loading
+            }
         }
     }
 
