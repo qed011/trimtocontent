@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trim to Content - Remove Empty Borders from Images Instantly</title>
+    <meta name="description" content="Free online tool to trim empty borders from images. Remove transparent or white backgrounds automatically. Works 100% in your browser - no upload needed.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trim to Content - Remove Empty Borders from Images">
+    <meta property="og:description" content="Free online tool to trim empty borders from images. 100% client-side processing - your images never leave your device.">
+    <meta property="og:url" content="https://yourusername.github.io/trim-to-content/">
+    <meta property="og:image" content="https://yourusername.github.io/trim-to-content/og-image.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trim to Content - Remove Empty Borders">
+    <meta name="twitter:description" content="Free online tool to trim empty borders from images. Works 100% in your browser.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='80' height='80' fill='%234A90E2' rx='8'/><rect x='20' y='20' width='60' height='60' fill='white' rx='4'/></svg>">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo" data-i18n="app_title">Trim to Content</h1>
+                <div class="header-controls">
+                    <select id="languageSelector" aria-label="Language">
+                        <option value="en">English</option>
+                        <option value="pt-BR">Português</option>
+                        <option value="es">Español</option>
+                    </select>
+                    <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <button id="restoreProBtn" class="btn-secondary" data-i18n="restore_pro">Restore Pro</button>
+                    <button id="upgradeBtn" class="btn-primary" data-i18n="upgrade_to_pro">Upgrade to Pro</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Privacy Notice -->
+        <div class="privacy-notice">
+            <span class="lock-icon">🔒</span>
+            <span data-i18n="privacy_notice">All processing happens locally in your browser. No images are uploaded to any server.</span>
+        </div>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div id="dropZone" class="drop-zone">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <h2 data-i18n="drag_drop_title">Drag & Drop Images Here</h2>
+                <p data-i18n="drag_drop_subtitle">or click to browse</p>
+                <p class="supported-formats" data-i18n="supported_formats">Supports PNG, JPG, WebP</p>
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg,image/webp" multiple hidden>
+            </div>
+        </section>
+
+        <!-- Settings Section (shown when images loaded) -->
+        <section id="settingsSection" class="settings-section hidden">
+            <h3 data-i18n="settings_title">Settings</h3>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label for="trimMode" data-i18n="trim_mode">Trim Mode:</label>
+                    <select id="trimMode">
+                        <option value="transparency" data-i18n="mode_transparency">Transparency (PNG)</option>
+                        <option value="white" data-i18n="mode_white">Near-White Background</option>
+                    </select>
+                </div>
+                <div class="setting-item" id="thresholdSetting">
+                    <label for="threshold">
+                        <span data-i18n="threshold_label">Threshold:</span>
+                        <span id="thresholdValue">10</span>
+                        <span class="pro-badge" data-i18n="pro_only">PRO</span>
+                    </label>
+                    <input type="range" id="threshold" min="0" max="40" value="10" disabled>
+                </div>
+                <div class="setting-item">
+                    <label for="outputFormat" data-i18n="output_format">Output Format:</label>
+                    <select id="outputFormat">
+                        <option value="original" data-i18n="format_original">Keep Original</option>
+                        <option value="png" data-i18n="format_png">PNG</option>
+                        <option value="webp" data-i18n="format_webp">WebP</option>
+                    </select>
+                </div>
+            </div>
+            <button id="trimBtn" class="btn-primary btn-large" data-i18n="trim_images">Trim Images</button>
+        </section>
+
+        <!-- Images List -->
+        <section id="imagesSection" class="images-section hidden">
+            <div class="section-header">
+                <h3 data-i18n="images_title">Your Images</h3>
+                <div class="batch-actions">
+                    <button id="downloadAllBtn" class="btn-secondary hidden" data-i18n="download_all_zip">Download All as ZIP</button>
+                    <button id="clearAllBtn" class="btn-text" data-i18n="clear_all">Clear All</button>
+                </div>
+            </div>
+            <div id="imagesList" class="images-list"></div>
+            <div id="progressBar" class="progress-bar hidden">
+                <div class="progress-fill"></div>
+                <span class="progress-text">0%</span>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2 data-i18n="how_it_works_title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4 data-i18n="step1_title">Upload Your Images</h4>
+                    <p data-i18n="step1_desc">Drag and drop or click to select PNG, JPG, or WebP images from your device.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4 data-i18n="step2_title">Automatic Detection</h4>
+                    <p data-i18n="step2_desc">Our algorithm detects and removes transparent or near-white empty borders around your content.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4 data-i18n="step3_title">Download Results</h4>
+                    <p data-i18n="step3_desc">Get your perfectly trimmed images instantly. Pro users can download all as a ZIP file.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Placeholder (only shown for Free users) -->
+        <aside id="adContainer" class="ad-container hidden">
+            <!-- Google AdSense ad unit would go here -->
+            <div class="ad-placeholder" data-i18n="ad_label">Advertisement</div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Trim to Content. <a href="privacy.html" data-i18n="privacy_policy">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <!-- Upgrade Modal -->
+    <div id="upgradeModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">&times;</button>
+            <h2 data-i18n="upgrade_modal_title">Upgrade to Pro - Lifetime Access</h2>
+            <div class="features-list">
+                <div class="feature">✓ <span data-i18n="feature_unlimited">Unlimited images per batch</span></div>
+                <div class="feature">✓ <span data-i18n="feature_threshold">Adjustable threshold slider</span></div>
+                <div class="feature">✓ <span data-i18n="feature_zip">Download all as ZIP</span></div>
+                <div class="feature">✓ <span data-i18n="feature_no_ads">No advertisements</span></div>
+                <div class="feature">✓ <span data-i18n="feature_lifetime">Lifetime access on this device</span></div>
+            </div>
+            <p class="modal-note" data-i18n="one_person_license">Each license is intended for one person.</p>
+            <a href="https://buy.stripe.com/REPLACE_ME" target="_blank" class="btn-primary btn-large" data-i18n="buy_now">Buy Now - $9.99</a>
+        </div>
+    </div>
+
+    <!-- Restore Pro Modal -->
+    <div id="restoreModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">&times;</button>
+            <h2 data-i18n="restore_modal_title">Restore Pro License</h2>
+            <p data-i18n="restore_instructions">Enter your license key to restore Pro features on this device.</p>
+            <input type="text" id="licenseKeyInput" placeholder="TRIM-XXXX-XXXX-XXXX-X" class="license-input">
+            <button id="validateLicenseBtn" class="btn-primary" data-i18n="validate_license">Validate License</button>
+            <div id="licenseMessage" class="license-message"></div>
+        </div>
+    </div>
+
+    <!-- Free Limit Modal -->
+    <div id="freeLimitModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">&times;</button>
+            <h2 data-i18n="free_limit_title">Free Plan Limitation</h2>
+            <p data-i18n="free_limit_message">Free users can only process 1 image at a time. Upgrade to Pro for unlimited batch processing!</p>
+            <button class="btn-primary" data-i18n="upgrade_now" onclick="document.getElementById('freeLimitModal').classList.add('hidden'); document.getElementById('upgradeModal').classList.remove('hidden');">Upgrade Now</button>
+        </div>
+    </div>
+
+    <!-- JSZip CDN (for Pro users) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- Google AdSense Placeholder (conditionally loaded) -->
+    <script id="adsenseScript">
+        // AdSense script will be injected here by app.js if user is Free tier
+    </script>
+
+    <script src="app.js"></script>
+</body>
+</html>

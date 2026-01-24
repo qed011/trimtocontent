@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Trim to Content Pro</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='80' height='80' fill='%234A90E2' rx='8'/><rect x='20' y='20' width='60' height='60' fill='white' rx='4'/></svg>">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --accent-primary: #4A90E2;
+            --accent-hover: #357ABD;
+            --success: #28a745;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #e9ecef;
+            --text-secondary: #adb5bd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            background-color: var(--bg-secondary);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--success);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .license-box {
+            background-color: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px dashed var(--accent-primary);
+        }
+
+        .license-key {
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin: 1rem 0;
+            word-break: break-all;
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-primary);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 2rem auto;
+            max-width: 400px;
+        }
+
+        .feature {
+            padding: 0.5rem 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">🎉</div>
+        <h1 id="thankYouTitle">Thank You for Your Purchase!</h1>
+        <p id="welcomeMessage">Welcome to Trim to Content Pro! Your lifetime license has been activated on this device.</p>
+
+        <div class="license-box">
+            <p id="licenseInfo"><strong>Your License Key:</strong></p>
+            <div class="license-key" id="licenseKey">Loading...</div>
+            <p class="note" id="saveNote">Save this key to restore Pro features on other devices. Each license is intended for one person.</p>
+        </div>
+
+        <div class="features-list">
+            <div class="feature">✓ <span id="feature1">Unlimited images per batch</span></div>
+            <div class="feature">✓ <span id="feature2">Adjustable threshold slider</span></div>
+            <div class="feature">✓ <span id="feature3">Download all as ZIP</span></div>
+            <div class="feature">✓ <span id="feature4">No advertisements</span></div>
+            <div class="feature">✓ <span id="feature5">Lifetime access</span></div>
+        </div>
+
+        <button class="btn-primary" id="startBtn">Start Using Trim to Content Pro</button>
+    </div>
+
+    <script>
+        // Translations for thank you page
+        const translations = {
+            en: {
+                thankYouTitle: "Thank You for Your Purchase!",
+                welcomeMessage: "Welcome to Trim to Content Pro! Your lifetime license has been activated on this device.",
+                licenseInfo: "Your License Key:",
+                saveNote: "Save this key to restore Pro features on other devices. Each license is intended for one person.",
+                feature1: "Unlimited images per batch",
+                feature2: "Adjustable threshold slider",
+                feature3: "Download all as ZIP",
+                feature4: "No advertisements",
+                feature5: "Lifetime access",
+                startBtn: "Start Using Trim to Content Pro"
+            },
+            "pt-BR": {
+                thankYouTitle: "Obrigado pela Sua Compra!",
+                welcomeMessage: "Bem-vindo ao Trim to Content Pro! Sua licença vitalícia foi ativada neste dispositivo.",
+                licenseInfo: "Sua Chave de Licença:",
+                saveNote: "Salve esta chave para restaurar recursos Pro em outros dispositivos. Cada licença é destinada a uma pessoa.",
+                feature1: "Imagens ilimitadas por lote",
+                feature2: "Controle ajustável de limite",
+                feature3: "Baixar todas em ZIP",
+                feature4: "Sem anúncios",
+                feature5: "Acesso vitalício",
+                startBtn: "Começar a Usar Trim to Content Pro"
+            },
+            es: {
+                thankYouTitle: "¡Gracias por Tu Compra!",
+                welcomeMessage: "¡Bienvenido a Trim to Content Pro! Tu licencia de por vida ha sido activada en este dispositivo.",
+                licenseInfo: "Tu Clave de Licencia:",
+                saveNote: "Guarda esta clave para restaurar las funciones Pro en otros dispositivos. Cada licencia está destinada a una persona.",
+                feature1: "Imágenes ilimitadas por lote",
+                feature2: "Control ajustable de umbral",
+                feature3: "Descargar todas en ZIP",
+                feature4: "Sin anuncios",
+                feature5: "Acceso de por vida",
+                startBtn: "Comenzar a Usar Trim to Content Pro"
+            }
+        };
+
+        // Detect language
+        function detectLanguage() {
+            const saved = localStorage.getItem('language');
+            if (saved && translations[saved]) return saved;
+            
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (translations[browserLang]) return browserLang;
+            
+            const langPrefix = browserLang.split('-')[0];
+            if (langPrefix === 'pt') return 'pt-BR';
+            if (langPrefix === 'es') return 'es';
+            
+            return 'en';
+        }
+
+        // Apply translations
+        function applyTranslations() {
+            const lang = detectLanguage();
+            const t = translations[lang];
+            
+            document.getElementById('thankYouTitle').textContent = t.thankYouTitle;
+            document.getElementById('welcomeMessage').textContent = t.welcomeMessage;
+            document.getElementById('licenseInfo').innerHTML = '<strong>' + t.licenseInfo + '</strong>';
+            document.getElementById('saveNote').textContent = t.saveNote;
+            document.getElementById('feature1').textContent = t.feature1;
+            document.getElementById('feature2').textContent = t.feature2;
+            document.getElementById('feature3').textContent = t.feature3;
+            document.getElementById('feature4').textContent = t.feature4;
+            document.getElementById('feature5').textContent = t.feature5;
+            document.getElementById('startBtn').textContent = t.startBtn;
+            
+            document.documentElement.lang = lang;
+        }
+
+        // Generate a license key (in production, this would come from Stripe metadata)
+        function generateLicenseKey() {
+            const BASE32 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+            let parts = [];
+            
+            for (let i = 0; i < 3; i++) {
+                let part = '';
+                for (let j = 0; j < 4; j++) {
+                    part += BASE32[Math.floor(Math.random() * 32)];
+                }
+                parts.push(part);
+            }
+            
+            const data = parts.join('');
+            let sum = 0;
+            for (let i = 0; i < data.length; i++) {
+                const pos = BASE32.indexOf(data[i]);
+                sum += pos * (i + 1);
+            }
+            const checksum = BASE32[sum % 32];
+            
+            return `TRIM-${parts[0]}-${parts[1]}-${parts[2]}-${checksum}`;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply theme
+            const theme = localStorage.getItem('theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            // Apply translations
+            applyTranslations();
+            
+            // Set Pro status
+            localStorage.setItem('pro', 'true');
+            
+            // Generate and display license key
+            let licenseKey = localStorage.getItem('licenseKey');
+            if (!licenseKey) {
+                licenseKey = generateLicenseKey();
+                localStorage.setItem('licenseKey', licenseKey);
+            }
+            document.getElementById('licenseKey').textContent = licenseKey;
+            
+            // Redirect button
+            document.getElementById('startBtn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
