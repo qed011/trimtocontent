@@ -16,25 +16,70 @@
     color-scheme: light;
 }
 
-[data-theme="dark"] {
-    --bg-primary: #1a1a1a;
-    --bg-secondary: #2d2d2d;
-    --bg-tertiary: #3d3d3d;
-    --text-primary: #e9ecef;
-    --text-secondary: #adb5bd;
-    --border-color: #495057;
-    --shadow: rgba(0, 0, 0, 0.3);
-    --shadow-lg: rgba(0, 0, 0, 0.5);
-    color-scheme: dark;
-}
-
-/* Override system color scheme - our theme takes priority */
+/* Light theme - explicit override for when system is in dark mode */
+[data-theme="light"], 
+:root[data-theme="light"],
 html[data-theme="light"] {
+    --bg-primary: #ffffff !important;
+    --bg-secondary: #f8f9fa !important;
+    --bg-tertiary: #e9ecef !important;
+    --text-primary: #212529 !important;
+    --text-secondary: #6c757d !important;
+    --border-color: #dee2e6 !important;
+    --shadow: rgba(0, 0, 0, 0.1) !important;
+    --shadow-lg: rgba(0, 0, 0, 0.15) !important;
     color-scheme: light !important;
 }
 
+/* Dark theme */
+[data-theme="dark"],
+:root[data-theme="dark"],
 html[data-theme="dark"] {
+    --bg-primary: #1a1a1a !important;
+    --bg-secondary: #2d2d2d !important;
+    --bg-tertiary: #3d3d3d !important;
+    --text-primary: #e9ecef !important;
+    --text-secondary: #adb5bd !important;
+    --border-color: #495057 !important;
+    --shadow: rgba(0, 0, 0, 0.3) !important;
+    --shadow-lg: rgba(0, 0, 0, 0.5) !important;
     color-scheme: dark !important;
+}
+
+/* Override system dark mode when user explicitly chose light theme */
+@media (prefers-color-scheme: dark) {
+    html[data-theme="light"],
+    html[data-theme="light"] body {
+        --bg-primary: #ffffff !important;
+        --bg-secondary: #f8f9fa !important;
+        --bg-tertiary: #e9ecef !important;
+        --text-primary: #212529 !important;
+        --text-secondary: #6c757d !important;
+        --border-color: #dee2e6 !important;
+        --shadow: rgba(0, 0, 0, 0.1) !important;
+        --shadow-lg: rgba(0, 0, 0, 0.15) !important;
+        color-scheme: light !important;
+        background-color: #ffffff !important;
+        color: #212529 !important;
+    }
+}
+
+/* Override system light mode when user explicitly chose dark theme */
+@media (prefers-color-scheme: light) {
+    html[data-theme="dark"],
+    html[data-theme="dark"] body {
+        --bg-primary: #1a1a1a !important;
+        --bg-secondary: #2d2d2d !important;
+        --bg-tertiary: #3d3d3d !important;
+        --text-primary: #e9ecef !important;
+        --text-secondary: #adb5bd !important;
+        --border-color: #495057 !important;
+        --shadow: rgba(0, 0, 0, 0.3) !important;
+        --shadow-lg: rgba(0, 0, 0, 0.5) !important;
+        color-scheme: dark !important;
+        background-color: #1a1a1a !important;
+        color: #e9ecef !important;
+    }
 }
 
 /* Reset & Base Styles */
@@ -50,6 +95,17 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Force body colors based on theme attribute */
+html[data-theme="light"] body {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+html[data-theme="dark"] body {
+    background-color: #1a1a1a !important;
+    color: #e9ecef !important;
 }
 
 .container {
