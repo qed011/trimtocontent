@@ -437,14 +437,23 @@ class ImageTrimmer {
         // Auto-detect mode: analyze image to determine best trimming method
         let actualMode = mode;
         let detectedColor = null;
+        let effectiveThreshold = threshold;
+        
         if (mode === 'auto') {
             const detection = this.detectBackgroundMode(pixels, canvas.width, canvas.height);
             actualMode = detection.mode;
             detectedColor = detection.backgroundColor;
+            
+            // Adjust threshold based on detected mode
+            // For non-white solid colors, we need a higher threshold
+            if (actualMode === 'color' && detectedColor) {
+                // Use a minimum threshold of 15 for solid color backgrounds
+                effectiveThreshold = Math.max(threshold, 15);
+            }
         }
 
         // Find bounding box of content
-        const bounds = this.findContentBounds(pixels, canvas.width, canvas.height, actualMode, threshold, detectedColor);
+        const bounds = this.findContentBounds(pixels, canvas.width, canvas.height, actualMode, effectiveThreshold, detectedColor);
 
         if (!bounds) {
             // No content found or image is all content
@@ -490,97 +499,128 @@ class ImageTrimmer {
     }
 
     /**
-     * Auto-detect background mode by analyzing image edges
+     * Auto-detect background mode by analyzing image edges and corners
      * Returns the best mode and detected background color
+     * 
+     * Strategy:
+     * 1. Sample corners first (most reliable for background detection)
+     * 2. Sample edges if corners are consistent
+     * 3. Determine if background is transparent, white, or solid color
      */
     static detectBackgroundMode(pixels, width, height) {
-        // Sample pixels from edges (top, bottom, left, right)
-        const edgePixels = [];
-        const sampleSize = Math.min(50, Math.floor(width / 4)); // Sample up to 50 pixels per edge
+        // === Step 1: Analyze corners (most reliable for background) ===
+        const cornerSize = Math.min(10, Math.floor(Math.min(width, height) / 10));
+        const corners = [
+            { x: 0, y: 0 },                           // Top-left
+            { x: width - cornerSize, y: 0 },          // Top-right
+            { x: 0, y: height - cornerSize },         // Bottom-left
+            { x: width - cornerSize, y: height - cornerSize }  // Bottom-right
+        ];
         
-        // Top edge
-        for (let x = 0; x < width; x += Math.max(1, Math.floor(width / sampleSize))) {
-            const idx = x * 4;
-            edgePixels.push({
-                r: pixels[idx],
-                g: pixels[idx + 1],
-                b: pixels[idx + 2],
-                a: pixels[idx + 3]
-            });
-        }
+        let transparentCount = 0;
+        let opaquePixels = [];
         
-        // Bottom edge
-        const bottomY = height - 1;
-        for (let x = 0; x < width; x += Math.max(1, Math.floor(width / sampleSize))) {
-            const idx = (bottomY * width + x) * 4;
-            edgePixels.push({
-                r: pixels[idx],
-                g: pixels[idx + 1],
-                b: pixels[idx + 2],
-                a: pixels[idx + 3]
-            });
-        }
-        
-        // Left edge
-        for (let y = 0; y < height; y += Math.max(1, Math.floor(height / sampleSize))) {
-            const idx = (y * width) * 4;
-            edgePixels.push({
-                r: pixels[idx],
-                g: pixels[idx + 1],
-                b: pixels[idx + 2],
-                a: pixels[idx + 3]
-            });
-        }
-        
-        // Right edge
-        const rightX = width - 1;
-        for (let y = 0; y < height; y += Math.max(1, Math.floor(height / sampleSize))) {
-            const idx = (y * width + rightX) * 4;
-            edgePixels.push({
-                r: pixels[idx],
-                g: pixels[idx + 1],
-                b: pixels[idx + 2],
-                a: pixels[idx + 3]
-            });
-        }
-        
-        // Check for transparency (any alpha < 255)
-        const hasTransparency = edgePixels.some(p => p.a < 250);
-        if (hasTransparency) {
-            return { mode: 'transparency', backgroundColor: null };
-        }
-        
-        // Calculate average color of edges
-        let totalR = 0, totalG = 0, totalB = 0;
-        let count = 0;
-        
-        for (const pixel of edgePixels) {
-            if (pixel.a > 250) { // Only consider opaque pixels
-                totalR += pixel.r;
-                totalG += pixel.g;
-                totalB += pixel.b;
-                count++;
+        // Sample pixels from each corner
+        for (const corner of corners) {
+            for (let dy = 0; dy < cornerSize; dy++) {
+                for (let dx = 0; dx < cornerSize; dx++) {
+                    const x = Math.min(corner.x + dx, width - 1);
+                    const y = Math.min(corner.y + dy, height - 1);
+                    const idx = (y * width + x) * 4;
+                    
+                    const pixel = {
+                        r: pixels[idx],
+                        g: pixels[idx + 1],
+                        b: pixels[idx + 2],
+                        a: pixels[idx + 3]
+                    };
+                    
+                    // Count truly transparent pixels (alpha < 128)
+                    if (pixel.a < 128) {
+                        transparentCount++;
+                    } else {
+                        opaquePixels.push(pixel);
+                    }
+                }
             }
         }
         
-        if (count === 0) {
+        const totalCornerPixels = cornerSize * cornerSize * 4;
+        const transparencyRatio = transparentCount / totalCornerPixels;
+        
+        // === Step 2: Determine mode based on transparency ratio ===
+        
+        // If more than 30% of corner pixels are transparent, use transparency mode
+        if (transparencyRatio > 0.3) {
+            console.log('Auto-detect: Transparency mode (ratio:', transparencyRatio.toFixed(2) + ')');
             return { mode: 'transparency', backgroundColor: null };
         }
         
+        // === Step 3: Analyze opaque pixels to find background color ===
+        if (opaquePixels.length === 0) {
+            console.log('Auto-detect: Transparency mode (no opaque pixels)');
+            return { mode: 'transparency', backgroundColor: null };
+        }
+        
+        // Calculate average color of opaque corner pixels
+        let totalR = 0, totalG = 0, totalB = 0;
+        for (const pixel of opaquePixels) {
+            totalR += pixel.r;
+            totalG += pixel.g;
+            totalB += pixel.b;
+        }
+        
         const avgColor = {
-            r: Math.round(totalR / count),
-            g: Math.round(totalG / count),
-            b: Math.round(totalB / count)
+            r: Math.round(totalR / opaquePixels.length),
+            g: Math.round(totalG / opaquePixels.length),
+            b: Math.round(totalB / opaquePixels.length)
         };
         
-        // Check if average color is near white (all channels > 240)
-        const isNearWhite = avgColor.r > 240 && avgColor.g > 240 && avgColor.b > 240;
+        // Calculate color variance to check consistency
+        let variance = 0;
+        for (const pixel of opaquePixels) {
+            variance += Math.abs(pixel.r - avgColor.r);
+            variance += Math.abs(pixel.g - avgColor.g);
+            variance += Math.abs(pixel.b - avgColor.b);
+        }
+        variance /= (opaquePixels.length * 3);
+        
+        // If variance is too high, corners have different colors (might be content, not background)
+        if (variance > 30) {
+            console.log('Auto-detect: High variance in corners, using transparency mode');
+            return { mode: 'transparency', backgroundColor: null };
+        }
+        
+        // === Step 4: Classify the background color ===
+        
+        // Check if near white (R, G, B all > 230)
+        const isNearWhite = avgColor.r > 230 && avgColor.g > 230 && avgColor.b > 230;
+        
+        // Check if near black (R, G, B all < 25)
+        const isNearBlack = avgColor.r < 25 && avgColor.g < 25 && avgColor.b < 25;
+        
+        // Check if grayscale (R ≈ G ≈ B)
+        const isGrayscale = Math.abs(avgColor.r - avgColor.g) < 10 && 
+                           Math.abs(avgColor.g - avgColor.b) < 10 &&
+                           Math.abs(avgColor.r - avgColor.b) < 10;
         
         if (isNearWhite) {
+            console.log('Auto-detect: Near-white mode (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
             return { mode: 'white', backgroundColor: avgColor };
         }
         
-        // Use custom color mode with detected background color
+        if (isNearBlack) {
+            console.log('Auto-detect: Solid color mode - black (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
+            return { mode: 'color', backgroundColor: avgColor };
+        }
+        
+        if (isGrayscale) {
+            console.log('Auto-detect: Solid color mode - gray (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
+            return { mode: 'color', backgroundColor: avgColor };
+        }
+        
+        // Default: use detected color as background
+        console.log('Auto-detect: Solid color mode (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
         return { mode: 'color', backgroundColor: avgColor };
     }
 
