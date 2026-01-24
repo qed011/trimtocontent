@@ -76,7 +76,9 @@ const translations = {
         threshold_help_tip1: "Start with value 10-15 for most images",
         threshold_help_tip2: "Increase slowly and preview before processing",
         threshold_help_tip3: "For text with anti-aliasing (smooth edges), use 20-25",
-        threshold_help_tip4: "Watch the preview to avoid cutting into your content"
+        threshold_help_tip4: "Watch the preview to avoid cutting into your content",
+        contact_support: "Questions or feedback?",
+        license_help: "Lost your key? Contact"
     },
     "pt-BR": {
         app_title: "Cortar ao Conteúdo",
@@ -147,7 +149,9 @@ const translations = {
         threshold_help_tip1: "Comece com valor 10-15 para a maioria das imagens",
         threshold_help_tip2: "Aumente lentamente e visualize antes de processar",
         threshold_help_tip3: "Para texto com suavização (bordas suaves), use 20-25",
-        threshold_help_tip4: "Observe a prévia para evitar cortar seu conteúdo"
+        threshold_help_tip4: "Observe a prévia para evitar cortar seu conteúdo",
+        contact_support: "Dúvidas ou sugestões?",
+        license_help: "Perdeu sua chave? Contate"
     },
     es: {
         app_title: "Recortar al Contenido",
@@ -219,7 +223,8 @@ const translations = {
         threshold_help_tip2: "Aumenta lentamente y previsualiza antes de procesar",
         threshold_help_tip3: "Para texto con suavizado (bordes suaves), usa 20-25",
         threshold_help_tip4: "Observa la vista previa para evitar cortar tu contenido",
-        license_invalid: "✗ Formato de clave de licencia inválido."
+        contact_support: "¿Preguntas o comentarios?",
+        license_help: "¿Perdiste tu clave? Contacta"
     }
 };
 
@@ -367,46 +372,7 @@ class LicenseValidator {
         }
         return this.BASE32[sum % 32];
     }
-
-    // Generate a sample valid key for testing
-    static generateSampleKey() {
-        let parts = [];
-        for (let i = 0; i < 3; i++) {
-            let part = '';
-            for (let j = 0; j < 4; j++) {
-                part += this.BASE32[Math.floor(Math.random() * 32)];
-            }
-            parts.push(part);
-        }
-        const data = parts.join('');
-        const checksum = this.calculateChecksum(data);
-        return `TRIM-${parts[0]}-${parts[1]}-${parts[2]}-${checksum}`;
-    }
 }
-
-// ===================================
-// License Testing Helper (Dev Only)
-// ===================================
-// Para testar offline o sistema de licença, abra o console (F12) e digite:
-// generateTestLicense() - gera uma chave de teste válida
-// validateTestLicense() - valida a última chave gerada
-const generateTestLicense = () => {
-    const key = LicenseValidator.generateSampleKey();
-    window.testLicenseKey = key;
-    console.log('✓ Chave de teste gerada:', key);
-    console.log('Cole esta chave no modal de "Restore Pro License"');
-    return key;
-};
-
-const validateTestLicense = () => {
-    if (!window.testLicenseKey) {
-        console.log('❌ Nenhuma chave gerada. Execute generateTestLicense() primeiro');
-        return false;
-    }
-    const isValid = LicenseValidator.validate(window.testLicenseKey);
-    console.log(isValid ? '✓ Chave válida!' : '❌ Chave inválida');
-    return isValid;
-};
 
 // ===================================
 // Image Trimmer - Core Algorithm
@@ -552,13 +518,11 @@ class ImageTrimmer {
         
         // If more than 30% of corner pixels are transparent, use transparency mode
         if (transparencyRatio > 0.3) {
-            console.log('Auto-detect: Transparency mode (ratio:', transparencyRatio.toFixed(2) + ')');
             return { mode: 'transparency', backgroundColor: null };
         }
         
         // === Step 3: Analyze opaque pixels to find background color ===
         if (opaquePixels.length === 0) {
-            console.log('Auto-detect: Transparency mode (no opaque pixels)');
             return { mode: 'transparency', backgroundColor: null };
         }
         
@@ -587,7 +551,6 @@ class ImageTrimmer {
         
         // If variance is too high, corners have different colors (might be content, not background)
         if (variance > 30) {
-            console.log('Auto-detect: High variance in corners, using transparency mode');
             return { mode: 'transparency', backgroundColor: null };
         }
         
@@ -605,22 +568,18 @@ class ImageTrimmer {
                            Math.abs(avgColor.r - avgColor.b) < 10;
         
         if (isNearWhite) {
-            console.log('Auto-detect: Near-white mode (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
             return { mode: 'white', backgroundColor: avgColor };
         }
         
         if (isNearBlack) {
-            console.log('Auto-detect: Solid color mode - black (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
             return { mode: 'color', backgroundColor: avgColor };
         }
         
         if (isGrayscale) {
-            console.log('Auto-detect: Solid color mode - gray (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
             return { mode: 'color', backgroundColor: avgColor };
         }
         
         // Default: use detected color as background
-        console.log('Auto-detect: Solid color mode (avg:', avgColor.r, avgColor.g, avgColor.b + ')');
         return { mode: 'color', backgroundColor: avgColor };
     }
 
@@ -884,7 +843,6 @@ class UIManager {
             // This stops any new ad requests from being made
             if (adsenseLoader) {
                 adsenseLoader.remove();
-                console.log('AdSense Auto Ads disabled for Pro user');
             }
             
             // Clear any AdSense-related global state to prevent residual ads
@@ -1271,7 +1229,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Translate UI
     i18n.updateUI();
-    
-    // Log sample license key for testing (remove in production)
-    console.log('Sample valid license key:', LicenseValidator.generateSampleKey());
 });
