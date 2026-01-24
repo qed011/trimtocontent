@@ -13,6 +13,7 @@
     --warning: #ffc107;
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-lg: rgba(0, 0, 0, 0.15);
+    color-scheme: light;
 }
 
 [data-theme="dark"] {
@@ -24,6 +25,20 @@
     --border-color: #495057;
     --shadow: rgba(0, 0, 0, 0.3);
     --shadow-lg: rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+}
+
+/* Override system color scheme - our theme takes priority */
+html {
+    color-scheme: light dark;
+}
+
+html[data-theme="light"] {
+    color-scheme: light !important;
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark !important;
 }
 
 /* Reset & Base Styles */

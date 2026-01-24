@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Trim to Content - Remove Empty Borders from Images Instantly</title>
+    
+    <!-- Early theme detection to prevent flash -->
+    <script>
+        (function() {
+            const saved = localStorage.getItem('theme');
+            const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <meta name="description" content="Free online tool to trim empty borders from images. Remove transparent or white backgrounds automatically. Works 100% in your browser - no upload needed.">
     
     <!-- Open Graph / Social Media -->
