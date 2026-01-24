@@ -770,8 +770,18 @@ class UIManager {
         this.upgradeBtn.addEventListener('click', () => this.showModal('upgradeModal'));
         this.restoreProBtn.addEventListener('click', () => this.showModal('restoreModal'));
         
-        // Theme toggle
-        this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        // Theme toggle - use debounce to prevent double-firing on mobile
+        let themeToggleDebounce = false;
+        const handleThemeToggle = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (themeToggleDebounce) return;
+            themeToggleDebounce = true;
+            this.toggleTheme();
+            setTimeout(() => { themeToggleDebounce = false; }, 300);
+        };
+        this.themeToggle.addEventListener('click', handleThemeToggle);
+        this.themeToggle.addEventListener('touchend', handleThemeToggle);
         
         // Language selector
         this.languageSelector.value = this.appState.currentLanguage;
