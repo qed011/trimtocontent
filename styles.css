@@ -1,5 +1,14 @@
 /* CSS Variables for Theme Support */
 :root {
+    /* Spacing scale */
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 2.5rem;
+    --section-gap: var(--space-2xl);
+    
     --bg-primary: #ffffff;
     --bg-secondary: #f8f9fa;
     --bg-tertiary: #e9ecef;
@@ -98,15 +107,13 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    max-height: 100vh;
     overflow-y: auto;
     font-size: 16px;
 }
 
-/* Desktop: no scroll layout */
+/* Desktop: larger font */
 @media (min-width: 1366px) and (min-height: 768px) {
     body {
-        overflow-y: hidden;
         font-size: 17px;
     }
 }
@@ -132,7 +139,7 @@ html[data-theme="dark"] body {
 header {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
-    padding: 0.5rem 0;
+    padding: var(--space-md) 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -249,26 +256,32 @@ header {
 
 /* Main Content */
 main {
-    padding: 1.25rem 20px 0.75rem;
+    padding: var(--section-gap) 20px;
     flex: 1;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    gap: var(--section-gap);
 }
 
 /* Privacy Notice - integrado ao upload */
 .privacy-notice {
-    background-color: transparent;
+    background-color: rgba(74, 144, 226, 0.1);
     padding: 0.6rem 1rem;
     border-radius: 6px;
-    margin: 0;
+    margin-top: 0.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     font-size: 0.95rem;
-    color: var(--text-secondary);
-    border-top: 1px dashed var(--border-color);
+    color: #4A90E2;
+    border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+[data-theme="dark"] .privacy-notice {
+    background-color: rgba(74, 144, 226, 0.15);
+    color: #6db3f2;
 }
 
 .lock-icon {
@@ -277,7 +290,11 @@ main {
 
 /* Drop Zone */
 .upload-section {
-    margin-bottom: 1rem;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 .drop-zone {
@@ -288,6 +305,12 @@ main {
     cursor: pointer;
     transition: all 0.3s ease;
     background-color: var(--bg-secondary);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
 }
 
 .drop-zone:hover, .drop-zone.drag-over {
@@ -511,33 +534,27 @@ main {
 
 /* How It Works Section */
 .how-it-works {
-    margin-top: auto;
-    padding: 1.5rem 0 1rem;
+    margin: 0;
+    padding: 0;
     text-align: center;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 0;
+    flex-shrink: 0;
 }
 
 .how-it-works h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
     font-weight: 600;
 }
 
 .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 0.5rem;
-    flex: 1;
-    align-content: center;
+    gap: var(--space-lg);
+    margin-top: 0;
 }
 
 .step {
-    padding: 1rem;
+    padding: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -545,29 +562,29 @@ main {
 }
 
 .step-number {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     background-color: var(--accent-primary);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin: 0 auto 0.75rem;
+    margin: 0 auto 0.5rem;
 }
 
 .step h4 {
-    font-size: 1.15rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
     font-weight: 600;
 }
 
 .step p {
     color: var(--text-secondary);
-    font-size: 1rem;
-    line-height: 1.45;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 /* Modals */
@@ -678,21 +695,21 @@ main {
 footer {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
-    padding: 0.75rem 0;
+    padding: var(--space-md) 0;
     margin-top: 0;
     text-align: center;
     color: var(--text-secondary);
     flex-shrink: 0;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
 }
 
 footer p {
-    margin: 0.2rem 0;
+    margin: 0.1rem 0;
 }
 
 footer .contact-info {
-    font-size: 0.9rem;
-    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    margin-top: 0.15rem;
 }
 
 footer a {
