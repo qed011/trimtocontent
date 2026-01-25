@@ -61,97 +61,99 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container">
-        <!-- Upload Section -->
-        <section class="upload-section">
-            <div id="dropZone" class="drop-zone">
-                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <h2 data-i18n="drag_drop_title">Drag & Drop Images Here</h2>
-                <p data-i18n="drag_drop_subtitle">or click to browse</p>
-                <p class="supported-formats" data-i18n="supported_formats">Supports PNG, JPG, WebP</p>
-                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg,image/webp" multiple hidden>
-                <!-- Privacy Notice integrado ao card -->
-                <div class="privacy-notice">
-                    <span class="lock-icon">🔒</span>
-                    <span data-i18n="privacy_notice">All processing happens locally in your browser. No images are uploaded to any server.</span>
+    <main>
+        <div class="container">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div id="dropZone" class="drop-zone">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <h2 data-i18n="drag_drop_title">Drag & Drop Images Here</h2>
+                    <p data-i18n="drag_drop_subtitle">or click to browse</p>
+                    <p class="supported-formats" data-i18n="supported_formats">Supports PNG, JPG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg,image/webp" multiple hidden>
+                    <!-- Privacy Notice integrado ao card -->
+                    <div class="privacy-notice">
+                        <span class="lock-icon">🔒</span>
+                        <span data-i18n="privacy_notice">All processing happens locally in your browser. No images are uploaded to any server.</span>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Settings Section (shown when images loaded) -->
-        <section id="settingsSection" class="settings-section hidden">
-            <h3 data-i18n="settings_title">Settings</h3>
-            <div class="settings-grid">
-                <div class="setting-item">
-                    <label for="trimMode" data-i18n="trim_mode">Trim Mode:</label>
-                    <select id="trimMode">
-                        <option value="transparency" data-i18n="mode_transparency">Transparency (PNG)</option>
-                        <option value="white" data-i18n="mode_white">Near-White Background</option>
-                        <option value="auto" data-i18n="mode_auto">Auto-detect (PRO)</option>
-                    </select>
+            <!-- Settings Section (shown when images loaded) -->
+            <section id="settingsSection" class="settings-section hidden">
+                <h3 data-i18n="settings_title">Settings</h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="trimMode" data-i18n="trim_mode">Trim Mode:</label>
+                        <select id="trimMode">
+                            <option value="transparency" data-i18n="mode_transparency">Transparency (PNG)</option>
+                            <option value="white" data-i18n="mode_white">Near-White Background</option>
+                            <option value="auto" data-i18n="mode_auto">Auto-detect (PRO)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item" id="thresholdSetting">
+                        <label for="threshold">
+                            <span data-i18n="threshold_label">Threshold:</span>
+                            <span id="thresholdValue">10</span>
+                            <span class="pro-badge" data-i18n="pro_only">PRO</span>
+                            <button type="button" id="thresholdHelpBtn" class="help-btn" aria-label="Threshold help" title="What is threshold?">?</button>
+                        </label>
+                        <input type="range" id="threshold" min="0" max="40" value="10" disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label for="outputFormat" data-i18n="output_format">Output Format:</label>
+                        <select id="outputFormat">
+                            <option value="original" data-i18n="format_original">Keep Original</option>
+                            <option value="png" data-i18n="format_png">PNG</option>
+                            <option value="webp" data-i18n="format_webp">WebP</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="setting-item" id="thresholdSetting">
-                    <label for="threshold">
-                        <span data-i18n="threshold_label">Threshold:</span>
-                        <span id="thresholdValue">10</span>
-                        <span class="pro-badge" data-i18n="pro_only">PRO</span>
-                        <button type="button" id="thresholdHelpBtn" class="help-btn" aria-label="Threshold help" title="What is threshold?">?</button>
-                    </label>
-                    <input type="range" id="threshold" min="0" max="40" value="10" disabled>
-                </div>
-                <div class="setting-item">
-                    <label for="outputFormat" data-i18n="output_format">Output Format:</label>
-                    <select id="outputFormat">
-                        <option value="original" data-i18n="format_original">Keep Original</option>
-                        <option value="png" data-i18n="format_png">PNG</option>
-                        <option value="webp" data-i18n="format_webp">WebP</option>
-                    </select>
-                </div>
-            </div>
-            <button id="trimBtn" class="btn-primary btn-large" data-i18n="trim_images">Trim Images</button>
-        </section>
+                <button id="trimBtn" class="btn-primary btn-large" data-i18n="trim_images">Trim Images</button>
+            </section>
 
-        <!-- Images List -->
-        <section id="imagesSection" class="images-section hidden">
-            <div class="section-header">
-                <h3 data-i18n="images_title">Your Images</h3>
-                <div class="batch-actions">
-                    <button id="downloadAllBtn" class="btn-secondary hidden" data-i18n="download_all_zip">Download All as ZIP</button>
-                    <button id="clearAllBtn" class="btn-text" data-i18n="clear_all">Clear All</button>
+            <!-- Images List -->
+            <section id="imagesSection" class="images-section hidden">
+                <div class="section-header">
+                    <h3 data-i18n="images_title">Your Images</h3>
+                    <div class="batch-actions">
+                        <button id="downloadAllBtn" class="btn-secondary hidden" data-i18n="download_all_zip">Download All as ZIP</button>
+                        <button id="clearAllBtn" class="btn-text" data-i18n="clear_all">Clear All</button>
+                    </div>
                 </div>
-            </div>
-            <div id="imagesList" class="images-list"></div>
-            <div id="progressBar" class="progress-bar hidden">
-                <div class="progress-fill"></div>
-                <span class="progress-text">0%</span>
-            </div>
-        </section>
+                <div id="imagesList" class="images-list"></div>
+                <div id="progressBar" class="progress-bar hidden">
+                    <div class="progress-fill"></div>
+                    <span class="progress-text">0%</span>
+                </div>
+            </section>
 
-        <!-- How It Works Section -->
-        <section class="how-it-works">
-            <h2 data-i18n="how_it_works_title">How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h4 data-i18n="step1_title">Upload Your Images</h4>
-                    <p data-i18n="step1_desc">Drag and drop or click to select PNG, JPG, or WebP images from your device.</p>
+            <!-- How It Works Section -->
+            <section class="how-it-works">
+                <h2 data-i18n="how_it_works_title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4 data-i18n="step1_title">Upload Your Images</h4>
+                        <p data-i18n="step1_desc">Drag and drop or click to select PNG, JPG, or WebP images from your device.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4 data-i18n="step2_title">Automatic Detection</h4>
+                        <p data-i18n="step2_desc">Our algorithm detects and removes transparent or near-white empty borders around your content.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4 data-i18n="step3_title">Download Results</h4>
+                        <p data-i18n="step3_desc">Get your perfectly trimmed images instantly. Pro users can download all as a ZIP file.</p>
+                    </div>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h4 data-i18n="step2_title">Automatic Detection</h4>
-                    <p data-i18n="step2_desc">Our algorithm detects and removes transparent or near-white empty borders around your content.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h4 data-i18n="step3_title">Download Results</h4>
-                    <p data-i18n="step3_desc">Get your perfectly trimmed images instantly. Pro users can download all as a ZIP file.</p>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
     <!-- Footer -->
