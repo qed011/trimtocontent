@@ -93,8 +93,20 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    line-height: 1.6;
+    line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+/* Desktop: no scroll layout */
+@media (min-width: 1366px) and (min-height: 768px) {
+    body {
+        overflow-y: hidden;
+    }
 }
 
 /* Force body colors based on theme attribute */
@@ -118,11 +130,12 @@ html[data-theme="dark"] body {
 header {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
     transition: background-color 0.3s ease;
+    flex-shrink: 0;
 }
 
 .header-content {
@@ -234,36 +247,41 @@ header {
 
 /* Main Content */
 main {
-    padding: 2rem 20px;
-    min-height: calc(100vh - 200px);
+    padding: 1rem 20px 0.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
-/* Privacy Notice */
+/* Privacy Notice - integrado ao upload */
 .privacy-notice {
-    background-color: var(--bg-secondary);
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    margin: 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
+    border-top: 1px dashed var(--border-color);
 }
 
 .lock-icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 /* Drop Zone */
 .upload-section {
-    margin-bottom: 2rem;
+    margin-bottom: 0.75rem;
 }
 
 .drop-zone {
-    border: 3px dashed var(--border-color);
-    border-radius: 12px;
-    padding: 3rem 2rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -276,25 +294,27 @@ main {
 }
 
 .upload-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 1rem;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 0.5rem;
     color: var(--accent-primary);
 }
 
 .drop-zone h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.25rem;
     color: var(--text-primary);
 }
 
 .drop-zone p {
     color: var(--text-secondary);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
+    font-size: 0.85rem;
 }
 
 .supported-formats {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    margin-bottom: 0;
 }
 
 /* Settings Section */
@@ -489,48 +509,53 @@ main {
 
 /* How It Works Section */
 .how-it-works {
-    margin: 4rem 0;
+    margin-top: auto;
+    padding: 0.75rem 0 0.5rem;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .how-it-works h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 .steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
 }
 
 .step {
-    padding: 1.5rem;
+    padding: 0.5rem;
 }
 
 .step-number {
-    width: 50px;
-    height: 50px;
+    width: 28px;
+    height: 28px;
     background-color: var(--accent-primary);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    margin: 0 auto 1rem;
+    margin: 0 auto 0.35rem;
 }
 
 .step h4 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+    font-weight: 600;
 }
 
 .step p {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.75rem;
+    line-height: 1.35;
 }
 
 /* Modals */
@@ -641,19 +666,21 @@ main {
 footer {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
-    padding: 2rem 0;
-    margin-top: 4rem;
+    padding: 0.5rem 0;
+    margin-top: 0;
     text-align: center;
     color: var(--text-secondary);
+    flex-shrink: 0;
+    font-size: 0.8rem;
 }
 
 footer p {
-    margin: 0.25rem 0;
+    margin: 0.15rem 0;
 }
 
 footer .contact-info {
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
 }
 
 footer a {
@@ -690,6 +717,11 @@ footer a:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        max-height: none;
+        overflow-y: auto;
+    }
+    
     .header-content {
         flex-direction: column;
         align-items: flex-start;
@@ -715,6 +747,24 @@ footer a:hover {
 
     .steps {
         grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .step {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 0.75rem;
+        padding: 0.5rem;
+    }
+    
+    .step-number {
+        margin: 0;
+        flex-shrink: 0;
+    }
+    
+    .step-content {
+        flex: 1;
     }
 
     .settings-grid {
@@ -736,15 +786,19 @@ footer a:hover {
     }
 
     .drop-zone {
-        padding: 2rem 1rem;
+        padding: 1rem 0.75rem;
     }
 
     .drop-zone h2 {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 
     .how-it-works h2 {
-        font-size: 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .privacy-notice {
+        font-size: 0.7rem;
     }
 }
 /* Help Button for Threshold */

@@ -62,12 +62,6 @@
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Privacy Notice -->
-        <div class="privacy-notice">
-            <span class="lock-icon">🔒</span>
-            <span data-i18n="privacy_notice">All processing happens locally in your browser. No images are uploaded to any server.</span>
-        </div>
-
         <!-- Upload Section -->
         <section class="upload-section">
             <div id="dropZone" class="drop-zone">
@@ -80,6 +74,11 @@
                 <p data-i18n="drag_drop_subtitle">or click to browse</p>
                 <p class="supported-formats" data-i18n="supported_formats">Supports PNG, JPG, WebP</p>
                 <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg,image/webp" multiple hidden>
+                <!-- Privacy Notice integrado ao card -->
+                <div class="privacy-notice">
+                    <span class="lock-icon">🔒</span>
+                    <span data-i18n="privacy_notice">All processing happens locally in your browser. No images are uploaded to any server.</span>
+                </div>
             </div>
         </section>
 
