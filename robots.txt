@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yourusername.github.io/trim-to-content/sitemap.xml
+Sitemap: https://qed011.github.io/trimtocontent/sitemap.xml
