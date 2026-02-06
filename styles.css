@@ -804,8 +804,10 @@ footer a:hover {
         flex-shrink: 0;
     }
     
-    .step-content {
-        flex: 1;
+    .step h4,
+    .step p {
+        text-align: center;
+        width: 100%;
     }
 
     .settings-grid {
