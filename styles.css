@@ -792,14 +792,15 @@ footer a:hover {
     
     .step {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        text-align: left;
-        gap: 0.75rem;
+        text-align: center;
+        gap: 0.4rem;
         padding: 0.5rem;
     }
     
     .step-number {
-        margin: 0;
+        margin: 0 0 0.35rem;
         flex-shrink: 0;
     }
     
